@@ -8,6 +8,7 @@ import { waveformLinear } from './visualizations/waveform_line'
 import { waveformCircle } from './visualizations/waveform_circle'
 import { fullScreen } from './visualizations/full_screen'
 import { formatTime, getRandomColor, removeVisualizer, changeAnimationStatus } from './utitlities'
+import { YouTubePlayer } from './youtube'
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/brands.scss'
@@ -688,6 +689,59 @@ window.onload = () => {
       largePlayIcon.style.opacity = 1
       largePlayIcon.style.cursor = 'pointer'
       document.getElementById('track-name').innerHTML = '<span>01 Keep on Mixing</span>'
+    }
+  }
+
+  // YouTube Player Setup
+  const youtubePlayer = new YouTubePlayer(audio)
+  const youtubeUrlInput = document.getElementById('youtube-url-input')
+  const youtubePlayBtn = document.getElementById('youtube-play-btn')
+
+  youtubePlayBtn.onclick = async function () {
+    if (!contextCreated) {
+      createContext()
+    }
+
+    const urlOrId = youtubeUrlInput.value.trim()
+    if (!urlOrId) {
+      console.log('[v0] Please enter a YouTube URL or video ID')
+      return
+    }
+
+    youtubePlayBtn.disabled = true
+    youtubePlayBtn.style.opacity = '0.5'
+    youtubePlayBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'
+
+    try {
+      const success = await youtubePlayer.loadYouTubeVideo(urlOrId)
+      
+      if (success) {
+        audio.load()
+        playPause.classList.remove('fa-pause')
+        playPause.classList.add('fa-play')
+        largePlayIcon.style.opacity = 1
+        largePlayIcon.style.cursor = 'pointer'
+        
+        const videoId = youtubePlayer.extractVideoId(urlOrId)
+        document.getElementById('track-name').innerHTML = `<span>YouTube: ${videoId}</span>`
+      } else {
+        console.log('[v0] Note: Direct YouTube playback requires a backend service. Try uploading an audio file instead.')
+        document.getElementById('track-name').innerHTML = '<span style="color: #ff6b6b;">YouTube playback not available</span>'
+      }
+    } catch (err) {
+      console.error('[v0] YouTube error:', err)
+      document.getElementById('track-name').innerHTML = '<span style="color: #ff6b6b;">Error loading YouTube</span>'
+    } finally {
+      youtubePlayBtn.disabled = false
+      youtubePlayBtn.style.opacity = '1'
+      youtubePlayBtn.innerHTML = '<i class="fab fa-youtube"></i>'
+    }
+  }
+
+  // Allow Enter key in YouTube input to play
+  youtubeUrlInput.onkeypress = function (e) {
+    if (e.key === 'Enter') {
+      youtubePlayBtn.click()
     }
   }
 

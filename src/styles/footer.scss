@@ -1,3 +1,13 @@
+// Modern color palette
+$primary-dark: #0a0e27;
+$secondary-dark: #1a1f3a;
+$accent-cyan: #00d9ff;
+$accent-purple: #b366ff;
+$accent-pink: #ff0080;
+$text-primary: #ffffff;
+$text-secondary: rgba(255, 255, 255, 0.7);
+$border-color: rgba(255, 255, 255, 0.1);
+
 #file-input {
     width: 0.1px;
     height: 0.1px;
@@ -13,8 +23,11 @@ footer {
     bottom: 0;
     width: 100%;
     height: 36px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(10, 14, 39, 0.95);
+    backdrop-filter: blur(10px);
     color: #ffffff;
+    border-top: 1px solid rgba(0, 217, 255, 0.2);
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.5);
 }
 
 #footer-audio-player {
@@ -22,25 +35,31 @@ footer {
 }
 
 .footer-audio-container {
-    border-top: solid 2px rgba(0, 0, 0, 0.5);
+    border-top: none;
     display: flex;
+    align-items: center;
+    height: 100%;
 }
 
 .play-pause {
-    padding: 7px 20px 0 20px;
-    border-right: solid 2px rgba(0, 0, 0, 0.5);
-    color: rgba(255, 255, 255, 0.6);
-    transition: 0.2s;
-    font-size: 20px;
+    padding: 8px 16px;
+    border-right: 1px solid rgba(0, 217, 255, 0.2);
+    color: $text-secondary;
+    transition: 0.3s ease;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #play-pause {
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.3s ease;
 }
 
 #play-pause:hover {
-    color: rgba(255, 255, 255, 0.9);
+    color: $accent-cyan;
+    text-shadow: 0 0 10px $accent-cyan;
 }
 
 #play-pause:hover:after {
@@ -67,33 +86,36 @@ footer {
 }
 
 .file-input {
-    padding: 8px 0 0;
+    padding: 0 8px;
     font-size: 12px;
-    height: 36px;
-    border-right: solid 2px rgba(0, 0, 0, 0.5);
+    height: 100%;
+    border-right: 1px solid rgba(0, 217, 255, 0.2);
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
 }
 
 .file-input-container {
     width: -webkit-fit-content;
-    margin: 0 20px;
-    padding: 2px 6px ;
-    background-color: rgba(255, 255, 255, 0.6);
+    margin: 0 8px;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(179, 102, 255, 0.1));
     border-radius: 6px;
-    color: rgba(0, 0, 0, 0.7);
+    color: $accent-cyan;
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: 0.2s;
-    border: 1px solid rgba(0, 0, 0, 0.5);
+    transition: 0.3s ease;
+    border: 1px solid rgba(0, 217, 255, 0.3);
 }
     
 .file-input-container:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    color: rgba(0, 0, 0, 0.9);
-    border: 1px solid rgba(0, 0, 0, 0.8);
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(179, 102, 255, 0.2));
+    color: $accent-cyan;
+    border: 1px solid $accent-cyan;
+    box-shadow: 0 0 8px rgba(0, 217, 255, 0.3);
 }
 
 .file-input-container > label:hover:after {
@@ -122,20 +144,25 @@ footer {
 .file-input-container > label {
     font-weight: 600;
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.3s ease;
+    font-size: 11px;
 }
 
 #track-name {
     font-size: 12px;
-    padding: 11px 20px 0 20px;
+    padding: 8px 12px 0;
     color: rgba(255, 255, 255, 0.7);
-    border-right: solid 2px rgba(0, 0, 0, 0.5);
-    text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
-    flex: 1;
-    max-width: 200px;
+    border-right: 1px solid rgba(0, 217, 255, 0.2);
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    flex: 0 1 auto;
+    min-width: 100px;
+    max-width: 180px;
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    transition: 0.3s ease;
 }
 
 #track-name > span:hover {
@@ -222,6 +249,64 @@ footer {
     width: 100%;
     text-align: center;
     top: 26%;
+}
+
+// YouTube Input Section
+.youtube-input {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 8px;
+    border-right: 1px solid rgba(0, 217, 255, 0.2);
+    height: 100%;
+}
+
+.youtube-url-input {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: $text-secondary;
+    width: 140px;
+    transition: 0.3s ease;
+    
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+    }
+    
+    &:focus {
+        outline: none;
+        background: rgba(0, 217, 255, 0.1);
+        border-color: $accent-cyan;
+        box-shadow: 0 0 8px rgba(0, 217, 255, 0.2);
+        color: $text-primary;
+    }
+}
+
+.youtube-play-btn {
+    background: linear-gradient(135deg, rgba(255, 0, 128, 0.2), rgba(255, 0, 128, 0.1));
+    border: 1px solid rgba(255, 0, 128, 0.3);
+    border-radius: 4px;
+    padding: 6px 10px;
+    color: $accent-pink;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+        background: linear-gradient(135deg, rgba(255, 0, 128, 0.3), rgba(255, 0, 128, 0.2));
+        border-color: $accent-pink;
+        box-shadow: 0 0 8px rgba(255, 0, 128, 0.3);
+        transform: scale(1.05);
+    }
+    
+    &:active {
+        transform: scale(0.95);
+    }
 }
 
 #time-left {
