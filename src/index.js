@@ -524,9 +524,14 @@ window.onload = () => {
 
   const switchFullScreen = () => {
     if (!fscreen.fullscreenElement) {
-      fscreen.requestFullscreen(document.documentElement)
+      fscreen.requestFullscreen(document.documentElement).catch((err) => {
+        // Silently ignore fullscreen permission errors in sandboxed contexts (iframes)
+        console.log('[v0] Fullscreen not available in this context')
+      })
     } else {
-      fscreen.exitFullscreen()
+      fscreen.exitFullscreen().catch(() => {
+        // Ignore exit errors
+      })
     }
   }
 
