@@ -7,6 +7,7 @@ import { symetricalCircle } from './visualizations/symetrical_circle'
 import { waveformLinear } from './visualizations/waveform_line'
 import { waveformCircle } from './visualizations/waveform_circle'
 import { fullScreen } from './visualizations/full_screen'
+import { spiralGraph } from './visualizations/spiral'
 import { formatTime, getRandomColor, removeVisualizer, changeAnimationStatus } from './utitlities'
 import { YouTubePlayer } from './youtube'
 
@@ -59,6 +60,7 @@ window.onload = () => {
   const waveformLinearButton = document.getElementById('waveform-linear-button')
   const waveformCircleButton = document.getElementById('waveform-circle-button')
   const fullScreenButton = document.getElementById('full-screen-button')
+  const spiralButton = document.getElementById('spiral-button')
 
   const viridisButton = document.getElementById('viridis-button')
   const plasmaButton = document.getElementById('plasma-button')
@@ -85,7 +87,7 @@ window.onload = () => {
   let youtubePanelOpen = false
 
   const visualizerObj = {
-    barGraph: { button: barGraphButton, visualizer: barGraph, prev: 'waveformCircle', next: 'horizontalBar' },
+    barGraph: { button: barGraphButton, visualizer: barGraph, prev: 'spiralGraph', next: 'horizontalBar' },
     horizontalBar: { button: horizontalBarButton, visualizer: horizontalBar, prev: 'barGraph', next: 'circleGraph' },
     circleGraph: { button: circleGraphButton, visualizer: circleGraph, prev: 'horizontalBar', next: 'circleLinear' },
     circleLinear: { button: circleLinearButton, visualizer: circleLinear, prev: 'circleGraph', next: 'symetricalLine' },
@@ -93,7 +95,8 @@ window.onload = () => {
     symetricalCircle: { button: symetricalCircleButton, visualizer: symetricalCircle, prev: 'symetricalLine', next: 'fullScreen' },
     fullScreen: { button: fullScreenButton, visualizer: fullScreen, prev: 'symetricalCircle', next: 'waveformLinear' },
     waveformLinear: { button: waveformLinearButton, visualizer: waveformLinear, prev: 'fullScreen', next: 'waveformCircle' },
-    waveformCircle: { button: waveformCircleButton, visualizer: waveformCircle, prev: 'waveformLinear', next: 'barGraph' }
+    waveformCircle: { button: waveformCircleButton, visualizer: waveformCircle, prev: 'waveformLinear', next: 'spiralGraph' },
+    spiralGraph: { button: spiralButton, visualizer: spiralGraph, prev: 'waveformCircle', next: 'barGraph' }
   }
 
   const colorObj = {
@@ -339,6 +342,7 @@ window.onload = () => {
   waveformLinearButton.onclick = () => switchVisualizer('waveformLinear')
   waveformCircleButton.onclick = () => switchVisualizer('waveformCircle')
   fullScreenButton.onclick = () => switchVisualizer('fullScreen')
+  if (spiralButton) spiralButton.onclick = () => switchVisualizer('spiralGraph')
 
   document.getElementById('visualizer-title').onclick = () => nextVisualizer()
 

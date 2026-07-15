@@ -10,7 +10,7 @@ $purple:        #b366ff;
 $pink:          #ff0080;
 $white:         #ffffff;
 $muted:         rgba(255,255,255,0.45);
-$header-h:      36px;
+$header-h:      62px;
 $footer-h:      44px;
 $sidebar-w:     32px;
 
@@ -37,17 +37,33 @@ $sidebar-w:     32px;
     to bottom,
     transparent 0px,
     transparent 3px,
-    rgba(0,0,0,0.06) 3px,
-    rgba(0,0,0,0.06) 4px
+    rgba(0,0,0,0.07) 3px,
+    rgba(0,0,0,0.07) 4px
   );
   pointer-events: none;
   z-index: 1;
-  animation: scan-drift 8s linear infinite;
+  animation: scan-drift 10s linear infinite;
 }
 
 @keyframes scan-drift {
   0%   { background-position-y: 0px; }
   100% { background-position-y: 40px; }
+}
+
+// Neon grid beneath visualizer canvas
+.neon-grid-overlay {
+  position: fixed;
+  top: $header-h;
+  left: $sidebar-w;
+  right: $sidebar-w;
+  bottom: ($footer-h + 36px);
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(0,217,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,217,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 100%);
 }
 
 // ─── Large Play Overlay ───────────────────────────────────────────────────────
@@ -83,24 +99,24 @@ $sidebar-w:     32px;
   top: 0;
   left: 0;
   right: 0;
-  height: $header-h;
+  height: auto;
   z-index: 50;
   background: rgba(7,11,26,0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid $border;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8px 0 ($sidebar-w + 8px);
-  gap: 8px;
+  flex-direction: column;
+  padding: 0;
   transition: opacity 1s;
 }
 
-#top-bar-left {
+#top-bar-logo {
   display: flex;
   align-items: baseline;
   gap: 8px;
   overflow: hidden;
+  padding: 6px 8px 4px ($sidebar-w + 8px);
+  border-bottom: 1px solid $border;
 }
 
 .app-title-main {
@@ -122,11 +138,12 @@ $sidebar-w:     32px;
   text-overflow: ellipsis;
 }
 
-#top-bar-right {
+#top-bar-controls {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   flex-shrink: 0;
+  padding: 4px 8px 6px ($sidebar-w + 8px);
 }
 
 .credit-by {
@@ -346,7 +363,7 @@ $sidebar-w:     32px;
   i { text-shadow: 0 0 8px $cyan; }
 }
 
-.visualizer-option-9 { margin-bottom: 20px; }
+.visualizer-option-10 { margin-bottom: 20px; }
 
 // ─── Right Sidebar: Colors ────────────────────────────────────────────────────
 .right-sidebar {
@@ -454,15 +471,16 @@ $sidebar-w:     32px;
 // ─── Gain Bar ─────────────────────────────────────────────────────────────────
 .right-gain-bar {
   position: fixed;
-  right: 0;
+  right: $sidebar-w;
   bottom: $footer-h;
   height: 36px;
-  width: 260px;
+  width: 220px;
   z-index: 40;
   background: rgba(7,11,26,0.92);
   backdrop-filter: blur(12px);
   border-left: 1px solid $border;
   border-top: 1px solid $border;
+  border-right: 1px solid $border;
   transition: opacity 1s;
 }
 
@@ -540,7 +558,7 @@ $sidebar-w:     32px;
 // ─── Demo Button ──────────────────────────────────────────────────────────────
 #demo-button-container {
   position: fixed;
-  left: ($sidebar-w + 1px);
+  left: $sidebar-w;
   bottom: $footer-h;
   height: 36px;
   z-index: 40;
@@ -548,6 +566,7 @@ $sidebar-w:     32px;
   backdrop-filter: blur(12px);
   border-top: 1px solid $border;
   border-right: 1px solid $border;
+  border-left: 1px solid $border;
   transition: opacity 1s;
 }
 
@@ -883,6 +902,12 @@ footer {
   height: 100%;
   border-left: 1px solid $border;
   flex-shrink: 0;
+  margin-left: auto;
+}
+
+// Remove double border on first footer-right-controls child button
+.footer-right-controls > .footer-btn:first-child {
+  border-left: none;
 }
 
 // ─── Modals ───────────────────────────────────────────────────────────────────
