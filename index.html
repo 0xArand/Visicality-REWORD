@@ -4,17 +4,14 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=0.57, minimum-scale=0.57, maximum-scale=0.57"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>
-      Visicality: Online Music Visualizer utilizing Web Audio API and D3.js
-    </title>
+    <title>Visicality — Online Music Visualizer</title>
     <meta
       name="description"
-      content="Music Visualizer web app built with JavaScript, D3.js, Web Audio API. Created by Derek Wolpert."
+      content="Music Visualizer web app built with JavaScript, D3.js, Web Audio API. Created by Derek Wolpert. Modernized by ArndOZ."
     />
-
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link
       rel="icon"
@@ -26,432 +23,266 @@
     <script src="/src/index.js" type="module"></script>
   </head>
   <body id="app">
+
+    <!-- Large play icon overlay -->
     <section id="large-play">
       <span id="large-play-container">
         <i class="fas fa-play" id="large-play-icon"></i>
       </span>
     </section>
 
+    <!-- Scan-line overlay for visual style -->
+    <div class="scanline-overlay"></div>
+
+    <!-- Top header bar -->
+    <header id="top-bar">
+      <div id="top-bar-left">
+        <span class="app-title-main">vi·si·cal·i·ty</span>
+        <span class="app-title-sub">visual + musicality</span>
+      </div>
+      <div id="top-bar-right">
+        <span class="credit-by">by Derek Wolpert &amp; <span class="neon-text">ArndOZ</span></span>
+        <button class="icon-btn" id="keyboard-controls" data="Keyboard Controls" aria-label="Keyboard Controls">
+          <i class="fas fa-keyboard"></i>
+        </button>
+        <button class="icon-btn" id="info-link" data="About" aria-label="About">
+          <i class="fas fa-info-circle"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Background color panel (hidden by default, toggled) -->
     <section class="background-color-header" id="background-color-header">
       <div class="background-color-header-container">
-        <div class="background-color-title-container">
-          <h3 class="background-color-title" id="background-color-title">
-            Background Color Gradient
-          </h3>
+        <div class="rotate-background-container">
+          <div class="rotate-left" id="rotate-left"><i class="fas fa-undo-alt"></i></div>
+          <div class="rotate-right" id="rotate-right"><i class="fas fa-redo-alt"></i></div>
         </div>
-
-        <section class="rotate-background-container">
-          <div class="rotate-left" id="rotate-left">
-            <i class="fas fa-undo-alt"></i>
-          </div>
-          <div class="rotate-right" id="rotate-right">
-            <i class="fas fa-redo-alt"></i>
-          </div>
-        </section>
-
         <div class="color-picker-container-1">
           <label for="color-picker-1" id="color-picker-label-1">
             <input type="color" id="color-picker-1" value="#0C0C0C" />
             <i class="fas fa-palette"></i>
           </label>
         </div>
-
         <div class="color-picker-container-2">
           <label for="color-picker-2" id="color-picker-label-2">
             <input type="color" id="color-picker-2" value="#181818" />
-
             <i class="fas fa-palette"></i>
           </label>
         </div>
-
         <div class="color-picker-container-3">
           <label for="color-picker-3" id="color-picker-label-3">
             <input type="color" id="color-picker-3" value="#242424" />
-
             <i class="fas fa-palette"></i>
           </label>
         </div>
+        <h3 class="background-color-title" id="background-color-title">BG</h3>
       </div>
     </section>
 
-    <section class="personal-links" id="personal-links">
-      <div id="personal-links-container">
-        <a
-          href="https://github.com/derekwolpert/Visicality"
-          target="_blank"
-          data="Visicality's Github repository"
-        >
-          <i class="fab fa-github" id="github-link"></i>
-        </a>
-
-        <a
-          href="https://www.linkedin.com/in/derek-wolpert/"
-          target="_blank"
-          data="Derek Wolpert's LinkedIn profile"
-        >
-          <i class="fab fa-linkedin-in" id="linkedin-link"></i>
-        </a>
-
-        <a
-          href="https://angel.co/derek-wolpert"
-          target="_blank"
-          data="Derek Wolpert's AngelList profile"
-        >
-          <i class="fab fa-angellist" id="angellist-link"></i>
-        </a>
-
-        <a
-          href="https://www.derekwolpert.com"
-          target="_blank"
-          data="Derek Wolpert's personal website"
-        >
-          <i class="fas fa-external-link-alt" id="portfolio-link"></i>
-        </a>
-
-        <a
-          href="mailto: me@derekwolpert.com"
-          data="Send Derek Wolpert an email about his project"
-        >
-          <i class="far fa-envelope" id="email-link"></i>
-        </a>
-        <span data="Keyboard Controls">
-          <i class="fas fa-keyboard" id="keyboard-controls"></i>
-        </span>
-      </div>
-      <i class="fas fa-info-circle" id="info-link" data="Information"></i>
-    </section>
-
-    <section id="project-name">
-      <div class="project-title">
-        <span>vi·si·cal·i·ty</span> (visual + musicality)
-      </div>
-      <div class="project-subtitle">
-        an Online Music Visualizer utilizing
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API"
-          target="_blank"
-          >Web Audio API</a
-        >
-        and <a href="https://d3js.org" target="_blank">D3.js</a>
-      </div>
-      <div class="project-author">
-        designed and developed by
-        <a href="https://www.derekwolpert.com" target="_blank">Derek Wolpert</a>
-      </div>
-    </section>
-
+    <!-- Left sidebar: visualizer selector -->
     <section class="left-sidebar" id="left-sidebar">
       <div class="left-sidebar-container">
-        <div
-          class="visualizer-option-1 active-visualizer"
-          id="bar-graph-button"
-          data="Vertical Bars"
-        >
-          <span>1</span>
-        </div>
-        <div
-          class="visualizer-option-2"
-          id="horizontal-bar-button"
-          data="Horizontal Bars"
-        >
-          <span>2</span>
-        </div>
-        <div
-          class="visualizer-option-3"
-          id="circle-graph-button"
-          data="Center Circles"
-        >
-          <span>3</span>
-        </div>
-        <div
-          class="visualizer-option-4"
-          id="circle-linear-button"
-          data="Line Circles"
-        >
-          <span>4</span>
-        </div>
-        <div
-          class="visualizer-option-5"
-          id="symetrical-line-button"
-          data="Symetrical Lines"
-        >
-          <span>5</span>
-        </div>
-        <div
-          class="visualizer-option-6"
-          id="symetrical-circle-button"
-          data="Symetrical Circles"
-        >
-          <span>6</span>
-        </div>
-        <div
-          class="visualizer-option-7"
-          id="full-screen-button"
-          data="Full Screen Bars"
-        >
-          <span>7</span>
-        </div>
-        <div
-          class="visualizer-option-8"
-          id="waveform-linear-button"
-          data="Waveform Lines"
-        >
-          <span>8</span>
-        </div>
-        <div
-          class="visualizer-option-9"
-          id="waveform-circle-button"
-          data="Waveform Circles"
-        >
-          <span>9</span>
-        </div>
-
-        <h3 id="visualizer-title">Visualizations</h3>
+        <div class="visualizer-option-1 active-visualizer" id="bar-graph-button" data="Vertical Bars" aria-label="Vertical Bars"><i class="fas fa-chart-bar"></i></div>
+        <div class="visualizer-option-2" id="horizontal-bar-button" data="Horizontal Bars" aria-label="Horizontal Bars"><i class="fas fa-align-left"></i></div>
+        <div class="visualizer-option-3" id="circle-graph-button" data="Center Circles" aria-label="Center Circles"><i class="fas fa-circle-notch"></i></div>
+        <div class="visualizer-option-4" id="circle-linear-button" data="Line Circles" aria-label="Line Circles"><i class="fas fa-dot-circle"></i></div>
+        <div class="visualizer-option-5" id="symetrical-line-button" data="Symmetrical Lines" aria-label="Symmetrical Lines"><i class="fas fa-wave-square"></i></div>
+        <div class="visualizer-option-6" id="symetrical-circle-button" data="Symmetrical Circles" aria-label="Symmetrical Circles"><i class="fas fa-record-vinyl"></i></div>
+        <div class="visualizer-option-7" id="full-screen-button" data="Full Screen Bars" aria-label="Full Screen Bars"><i class="fas fa-grip-lines-vertical"></i></div>
+        <div class="visualizer-option-8" id="waveform-linear-button" data="Waveform Lines" aria-label="Waveform Lines"><i class="fas fa-water"></i></div>
+        <div class="visualizer-option-9" id="waveform-circle-button" data="Waveform Circle" aria-label="Waveform Circle"><i class="fas fa-compact-disc"></i></div>
+        <h3 id="visualizer-title">VIZ</h3>
       </div>
     </section>
 
-    <!-- <section id="microphone">
-        <span id="microphone-container">
-            <i class="fas fa-microphone"></i>
-        </span>
-    </section> -->
-
+    <!-- Right sidebar: color selector -->
     <section class="right-sidebar" id="right-sidebar">
       <div class="right-sidebar-container">
-        <h3 class="colors-title" id="colors-title">Colors</h3>
-
-        <div
-          class="color-option-1 active-color"
-          id="rainbow-button"
-          data="Rainbow"
-        >
-          <span>1</span>
-        </div>
-        <div class="color-option-2" id="plasma-button" data="Plasma">
-          <span>2</span>
-        </div>
-        <div class="color-option-3" id="viridis-button" data="Viridis">
-          <span>3</span>
-        </div>
-        <div class="color-option-4" id="sinebow-button" data="Sinebow">
-          <span>4</span>
-        </div>
-        <div class="color-option-5" id="spectral-button" data="Spectral">
-          <span>5</span>
-        </div>
-        <div class="color-option-6" id="cubehelix-button" data="Cubehelix">
-          <span>6</span>
-        </div>
-        <div class="color-option-7" id="ylorrd-button" data="Red Orange Yellow">
-          <span>7</span>
-        </div>
-        <div class="color-option-8" id="ylgnbu-button" data="Blue Green Yellow">
-          <span>8</span>
-        </div>
-        <div class="color-option-9" id="greys-button" data="Black Grey White">
-          <span>9</span>
-        </div>
+        <h3 class="colors-title" id="colors-title">CLR</h3>
+        <div class="color-option-1 active-color" id="rainbow-button" data="Rainbow" aria-label="Rainbow"><span class="color-dot" style="background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red)"></span></div>
+        <div class="color-option-2" id="plasma-button" data="Plasma" aria-label="Plasma"><span class="color-dot" style="background:linear-gradient(135deg,#0d0221,#7a04eb,#f5a623)"></span></div>
+        <div class="color-option-3" id="viridis-button" data="Viridis" aria-label="Viridis"><span class="color-dot" style="background:linear-gradient(135deg,#440154,#31688e,#35b779,#fde725)"></span></div>
+        <div class="color-option-4" id="sinebow-button" data="Sinebow" aria-label="Sinebow"><span class="color-dot" style="background:linear-gradient(135deg,#ff4444,#ff8800,#44ff44,#0044ff)"></span></div>
+        <div class="color-option-5" id="spectral-button" data="Spectral" aria-label="Spectral"><span class="color-dot" style="background:linear-gradient(135deg,#d53e4f,#f46d43,#fdae61,#abdda4,#3288bd)"></span></div>
+        <div class="color-option-6" id="cubehelix-button" data="Cubehelix" aria-label="Cubehelix"><span class="color-dot" style="background:linear-gradient(135deg,#000000,#333380,#668833,#cc9966,#ffffff)"></span></div>
+        <div class="color-option-7" id="ylorrd-button" data="Red Orange Yellow" aria-label="Red Orange Yellow"><span class="color-dot" style="background:linear-gradient(135deg,#800026,#e31a1c,#fd8d3c,#ffffcc)"></span></div>
+        <div class="color-option-8" id="ylgnbu-button" data="Blue Green Yellow" aria-label="Blue Green Yellow"><span class="color-dot" style="background:linear-gradient(135deg,#081d58,#225ea8,#41b6c4,#ffffcc)"></span></div>
+        <div class="color-option-9" id="greys-button" data="Greyscale" aria-label="Greyscale"><span class="color-dot" style="background:linear-gradient(135deg,#000,#888,#fff)"></span></div>
       </div>
     </section>
+
+    <!-- Gain bar -->
     <section class="right-gain-bar" id="right-gain-bar">
       <div class="right-gain-container">
+        <h3 class="gain-title" id="gain-title">GAIN</h3>
         <div class="gain-container">
           <div class="gain-bar-container">
             <div id="gain-bar"></div>
             <div id="gain-bar-value"></div>
           </div>
         </div>
-        <h3 class="gain-title" id="gain-title">Gain</h3>
       </div>
     </section>
 
+    <!-- Demo button -->
     <section id="demo-button-container">
-      <div id="demo-button">Demo Song</div>
+      <div id="demo-button">DEMO</div>
     </section>
 
-    <footer class="footer-audio-player" id="footer-audio-player">
+    <!-- YouTube panel (slide up) -->
+    <section id="youtube-panel" class="youtube-panel-closed">
+      <div id="youtube-panel-header">
+        <span id="youtube-panel-title"><i class="fab fa-youtube"></i> YouTube Player</span>
+        <button id="youtube-panel-close" aria-label="Close YouTube panel"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="youtube-panel-input">
+        <input
+          type="text"
+          id="youtube-url-input"
+          class="youtube-url-input"
+          placeholder="Paste YouTube URL or video ID..."
+          aria-label="YouTube URL or video ID"
+        />
+        <button id="youtube-play-btn" class="youtube-play-btn" aria-label="Load YouTube video">
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+      <div id="youtube-embed-area">
+        <iframe
+          id="youtube-iframe"
+          src=""
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          title="YouTube video player"
+        ></iframe>
+        <div id="youtube-embed-placeholder">
+          <i class="fab fa-youtube"></i>
+          <p>Enter a YouTube URL above to load a video</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer player bar -->
+    <footer id="footer-audio-player">
       <section class="footer-audio-container">
-        <div class="play-pause">
+        <!-- Play/Pause -->
+        <button class="footer-btn play-pause-btn" id="play-pause-btn" aria-label="Play/Pause">
           <i class="fas fa-play" id="play-pause"></i>
-        </div>
-        <div class="file-input">
-          <input
-            type="file"
-            id="file-input"
-            accept="audio/*, .m4a, .mp3, .wav, .flac .ogg, .aac"
-          />
-          <div class="file-input-container">
-            <label for="file-input" id="file-input-label"
-              >Choose a local file for visualizer</label
-            >
-          </div>
-        </div>
+        </button>
+
+        <!-- Track name -->
         <div id="track-name"></div>
 
-        <div id="time-progress"></div>
-
-        <div class="playbar-container">
-          <div id="playbar"></div>
-          <div id="playbar-progress"></div>
+        <!-- Progress bar -->
+        <div class="playbar-wrapper">
+          <span id="time-progress"></span>
+          <div class="playbar-container">
+            <div id="playbar"></div>
+            <div id="playbar-progress"></div>
+          </div>
+          <span id="time-left"></span>
         </div>
-        <div id="time-left"></div>
-        <div class="full-screen">
-          <span
-            id="full-screen-container"
-            data="Enter Full-Screen, or press [F]"
-          >
+
+        <!-- Right controls -->
+        <div class="footer-right-controls">
+          <!-- File upload -->
+          <input type="file" id="file-input" accept="audio/*, .m4a, .mp3, .wav, .flac, .ogg, .aac" />
+          <label for="file-input" class="footer-btn file-btn" id="file-input-label" title="Upload audio file" aria-label="Upload audio file">
+            <i class="fas fa-folder-open"></i>
+          </label>
+
+          <!-- YouTube toggle -->
+          <button class="footer-btn yt-toggle-btn" id="yt-toggle-btn" aria-label="Toggle YouTube panel" title="YouTube">
+            <i class="fab fa-youtube"></i>
+          </button>
+
+          <!-- Fullscreen -->
+          <button class="footer-btn fullscreen-btn" id="full-screen-container" data="Fullscreen [F]" aria-label="Toggle fullscreen">
             <i class="fas fa-arrows-alt"></i>
-          </span>
+          </button>
         </div>
       </section>
     </footer>
+
     <audio id="audio"></audio>
+
+    <!-- Personal links (hidden, kept for JS references) -->
+    <section class="personal-links" id="personal-links" style="display:none">
+      <div id="personal-links-container">
+        <a href="https://github.com/derekwolpert/Visicality" target="_blank" data="Visicality's Github repository"><i class="fab fa-github" id="github-link"></i></a>
+        <a href="https://www.linkedin.com/in/derek-wolpert/" target="_blank" data="Derek Wolpert's LinkedIn profile"><i class="fab fa-linkedin-in" id="linkedin-link"></i></a>
+        <a href="https://angel.co/derek-wolpert" target="_blank" data="Derek Wolpert's AngelList profile"><i class="fab fa-angellist" id="angellist-link"></i></a>
+        <a href="https://www.derekwolpert.com" target="_blank" data="Derek Wolpert's personal website"><i class="fas fa-external-link-alt" id="portfolio-link"></i></a>
+        <a href="mailto: me@derekwolpert.com" data="Send Derek Wolpert an email"><i class="far fa-envelope" id="email-link"></i></a>
+      </div>
+      <i class="fas fa-info-circle" id="info-link-old"></i>
+    </section>
+
+    <!-- Information modal -->
     <section id="information-modal">
       <div class="information-modal-container">
         <p class="center-modal-title">
-          Welcome to <span class="modal-italicize">vi·si·cal·i·ty</span> (visual
-          + musicality)
+          Welcome to <span class="modal-italicize">vi·si·cal·i·ty</span>
         </p>
         <br />
         <p>
-          <span class="modal-italicize">vi·si·cal·i·ty</span> is a web-based
-          music visualizer utilizing
-          <a
-            href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API"
-            target="_blank"
-            >Web Audio API</a
-          >
+          A web-based music visualizer powered by
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" target="_blank">Web Audio API</a>
           and <a href="https://d3js.org" target="_blank">D3.js</a>.
         </p>
         <br />
         <p class="modal-feature-title">Features:</p>
         <br />
         <ul>
-          <li>
-            Utilize your own audio files (or the built-in demo song) with a
-            unique audiovisual experience.
-          </li>
-          <li>Seamlessly switch between nine visualizer designs.</li>
-          <li>Select from nine diverse visualization color schemes.</li>
-          <li>
-            Full customizable color settings for visualizer, background gradient
-            and favicon.
-          </li>
-          <li>
-            Adjust the gain of the audio, and watch as the intensity of the
-            visualizer changes.
-          </li>
-          <li>Quick access to transition in and out of full-screen mode.</li>
-          <li>
-            Intuitive UI/UX that automatically hides when audio is playing and
-            there is no mouse movement.
-          </li>
-          <li>
-            Flexible combination of onscreen controls and keyboard shortcuts.
-          </li>
+          <li>Upload local audio files or use the built-in demo song.</li>
+          <li>9 visualizer designs &amp; 9 color schemes.</li>
+          <li>Customizable background gradient colors.</li>
+          <li>Adjustable gain (volume) control.</li>
+          <li>YouTube video embed panel.</li>
+          <li>Fullscreen mode support.</li>
+          <li>Keyboard shortcut controls.</li>
+          <li>Auto-hides UI when audio is playing.</li>
         </ul>
         <br />
         <p>
-          To learn more about
-          <span class="modal-italicize">vi·si·cal·i·ty</span> visit the
-          <a href="https://github.com/derekwolpert/Visicality" target="_blank"
-            >GitHub repository for this project</a
-          >. To learn more about
-          <span class="modal-italicize">vi·si·cal·i·ty</span>'s developer,
-          <span class="bold-modal">Derek Wolpert</span>, visit his
-          <a href="https://www.linkedin.com/in/derek-wolpert/" target="_blank"
-            >LinkedIn profile</a
-          >,
-          <a href="https://angel.co/derek-wolpert" target="_blank"
-            >AngelList profile</a
-          >, or
-          <a href="https://www.derekwolpert.com/" target="_blank"
-            >personal website</a
-          >. If you have any questions, comments, or would like to report an
-          issue feel free to
-          <a href="mailto: me@derekwolpert.com">reach out by email</a>.
+          Originally designed &amp; developed by <span class="bold-modal">Derek Wolpert</span>.
         </p>
         <br />
-        <p class="center-modal">Thanks for visiting 🙂</p>
-        <div id="close-modal">
-          <i class="fas fa-times"></i>
-        </div>
+        <p>
+          <span class="bold-modal neon-modal">Modernized by ArndOZ</span> — Modern UI, responsive mobile layout &amp; YouTube player integration.
+        </p>
+        <br />
+        <p class="center-modal">Thanks for visiting!</p>
+        <div id="close-modal"><i class="fas fa-times"></i></div>
       </div>
     </section>
 
+    <!-- Keyboard modal -->
     <section id="keyboard-modal">
       <div class="keyboard-modal-container">
         <div class="center-modal-title">Keyboard Controls</div>
         <br />
         <div class="center-modal">
-          In addtion to on-screen controls,
-          <span class="modal-italicize">vi·si·cal·i·ty</span> supports a wide
-          range of keyboard shortcuts:
+          <span class="modal-italicize">vi·si·cal·i·ty</span> supports keyboard shortcuts:
         </div>
         <br />
         <table>
-          <tr>
-            <th>Key</th>
-            <th>Action</th>
-          </tr>
-          <tr>
-            <td>Spacebar</td>
-            <td>Play / Pause Audio</td>
-          </tr>
-          <tr>
-            <td>Left-Arrow</td>
-            <td>Seek audio 5 seconds backwards</td>
-          </tr>
-          <tr>
-            <td>Right-Arrow</td>
-            <td>Seek audio 5 seconds forward</td>
-          </tr>
-          <tr>
-            <td>Up-Arrow</td>
-            <td>Increase gain (volume) by 10 percent</td>
-          </tr>
-          <tr>
-            <td>Down-arrow</td>
-            <td>Decrease gain (volume) by 10 percent</td>
-          </tr>
-          <tr>
-            <td>F</td>
-            <td>Enter / Exit fullscreen mode</td>
-          </tr>
-          <tr>
-            <td>W</td>
-            <td>Previous visualizer design, based on associated number</td>
-          </tr>
-          <tr>
-            <td>S</td>
-            <td>Next visualizer design, based on associated number</td>
-          </tr>
-          <tr>
-            <td>A</td>
-            <td>Previous visualizer color, based on associated number</td>
-          </tr>
-          <tr>
-            <td>D</td>
-            <td>Next visualizer color, based on associated number</td>
-          </tr>
-          <tr>
-            <td>R</td>
-            <td>Set random three-color background gradient</td>
-          </tr>
-          <tr>
-            <td>Q</td>
-            <td>Rotate background left 45 degrees</td>
-          </tr>
-          <tr>
-            <td>E</td>
-            <td>Rotate background right 45 degrees</td>
-          </tr>
+          <tr><th>Key</th><th>Action</th></tr>
+          <tr><td>Spacebar</td><td>Play / Pause</td></tr>
+          <tr><td>Left Arrow</td><td>Seek -5 seconds</td></tr>
+          <tr><td>Right Arrow</td><td>Seek +5 seconds</td></tr>
+          <tr><td>Up Arrow</td><td>Gain +10%</td></tr>
+          <tr><td>Down Arrow</td><td>Gain -10%</td></tr>
+          <tr><td>F</td><td>Toggle Fullscreen</td></tr>
+          <tr><td>W / S</td><td>Cycle Visualizer</td></tr>
+          <tr><td>A / D</td><td>Cycle Color</td></tr>
+          <tr><td>R</td><td>Random BG Gradient</td></tr>
+          <tr><td>Q / E</td><td>Rotate BG Gradient</td></tr>
         </table>
-
-        <div id="keyboard-close-modal">
-          <i class="fas fa-times"></i>
-        </div>
+        <div id="keyboard-close-modal"><i class="fas fa-times"></i></div>
       </div>
     </section>
+
   </body>
 </html>
