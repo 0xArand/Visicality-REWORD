@@ -10,7 +10,7 @@ $purple:        #b366ff;
 $pink:          #ff0080;
 $white:         #ffffff;
 $muted:         rgba(255,255,255,0.45);
-$header-h:      36px;
+$header-h:      62px;
 $footer-h:      44px;
 $sidebar-w:     32px;
 
@@ -99,24 +99,24 @@ $sidebar-w:     32px;
   top: 0;
   left: 0;
   right: 0;
-  height: $header-h;
+  height: auto;
   z-index: 50;
   background: rgba(7,11,26,0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid $border;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8px 0 ($sidebar-w + 8px);
-  gap: 8px;
+  flex-direction: column;
+  padding: 0;
   transition: opacity 1s;
 }
 
-#top-bar-left {
+#top-bar-logo {
   display: flex;
   align-items: baseline;
   gap: 8px;
   overflow: hidden;
+  padding: 6px 8px 4px ($sidebar-w + 8px);
+  border-bottom: 1px solid $border;
 }
 
 .app-title-main {
@@ -138,11 +138,12 @@ $sidebar-w:     32px;
   text-overflow: ellipsis;
 }
 
-#top-bar-right {
+#top-bar-controls {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   flex-shrink: 0;
+  padding: 4px 8px 6px ($sidebar-w + 8px);
 }
 
 .credit-by {
