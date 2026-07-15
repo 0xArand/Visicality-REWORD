@@ -252,3 +252,61 @@ $text-secondary: rgba(255, 255, 255, 0.7);
     border: 1px solid rgba(0, 0, 0, 0.8);
 }
 
+// Mobile responsive right sidebar
+@media (max-width: 768px) {
+    .right-sidebar {
+        width: 32px;
+        bottom: 76px;
+    }
+
+    .right-sidebar-container > div {
+        height: 32px;
+        width: 32px;
+    }
+
+    #colors-title {
+        font-size: 10px;
+    }
+
+    .right-gain-bar {
+        height: 32px;
+        width: 200px;
+        bottom: 40px;
+    }
+
+    #gain-title {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .right-sidebar {
+        width: 28px;
+        bottom: 36px;
+    }
+
+    .right-sidebar-container > div {
+        height: 28px;
+        width: 28px;
+        font-size: 10px;
+    }
+
+    .right-sidebar-container > div > span {
+        font-size: 10px;
+    }
+
+    #colors-title {
+        font-size: 8px;
+    }
+
+    .right-gain-bar {
+        height: 28px;
+        width: 150px;
+        bottom: 36px;
+    }
+
+    #gain-title {
+        font-size: 8px;
+    }
+}
+

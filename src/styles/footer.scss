@@ -366,3 +366,94 @@ footer {
     position: absolute;
     z-index: 100;
 }
+
+// Mobile responsive footer
+@media (max-width: 768px) {
+    footer {
+        height: 40px;
+    }
+
+    .play-pause {
+        padding: 6px 12px;
+        font-size: 16px;
+    }
+
+    .file-input {
+        padding: 0 4px;
+    }
+
+    .file-input-container {
+        margin: 0 4px;
+        padding: 3px 8px;
+        font-size: 9px;
+    }
+
+    .youtube-url-input {
+        width: 100px;
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+
+    .youtube-play-btn {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+
+    #track-name {
+        font-size: 10px;
+        padding: 6px 8px 0;
+        max-width: 120px;
+    }
+
+    #time-left {
+        width: 50px;
+        font-size: 9px;
+    }
+
+    .full-screen span {
+        font-size: 18px;
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    footer {
+        height: 36px;
+    }
+
+    .play-pause {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+
+    .file-input {
+        display: none;
+    }
+
+    .youtube-input {
+        display: none;
+    }
+
+    #track-name {
+        display: none;
+    }
+
+    #time-progress {
+        display: none;
+    }
+
+    .playbar-container {
+        flex: 0 0 60px;
+    }
+
+    #time-left {
+        width: 40px;
+        font-size: 8px;
+        padding: 8px 4px 0 4px;
+    }
+
+    .full-screen span {
+        font-size: 16px;
+        padding: 8px 8px;
+    }
+}

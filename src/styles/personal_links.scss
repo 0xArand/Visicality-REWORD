@@ -1,3 +1,7 @@
+// Modern color palette
+$accent-cyan: #00d9ff;
+$accent-purple: #b366ff;
+
 #personal-links {
     position: absolute;
     padding-right: 44px;
@@ -102,4 +106,60 @@
 
 #info-link {
     cursor: pointer;
+}
+
+// Hide social media links
+#github-link,
+#linkedin-link,
+#angellist-link,
+#portfolio-link,
+#email-link {
+    display: none;
+}
+
+// Keep keyboard and info visible on desktop
+#keyboard-controls,
+#info-link {
+    display: inline-block;
+}
+
+// Mobile responsive personal links
+@media (max-width: 768px) {
+    #personal-links {
+        padding-right: 36px;
+        font-size: 20px;
+    }
+
+    .personal-links i {
+        padding: 5px 2px 0 4px;
+        font-size: 18px;
+    }
+
+    #keyboard-controls {
+        font-size: 20px;
+    }
+
+    #info-link {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    #personal-links {
+        padding-right: 28px;
+        font-size: 16px;
+    }
+
+    .personal-links i {
+        padding: 4px 2px 0 3px;
+        font-size: 14px;
+    }
+
+    #keyboard-controls {
+        font-size: 16px;
+    }
+
+    #info-link {
+        font-size: 16px;
+    }
 }
